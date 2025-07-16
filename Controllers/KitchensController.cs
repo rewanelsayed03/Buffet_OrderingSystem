@@ -61,7 +61,7 @@ namespace Dreem.Controllers
             var kitchen = new Kitchen
             {
                 Location = dto.Location,
-                Orders = new List<Order>(),    // Don't assign orders/waiters from DTO
+                Orders = new List<Order>(),    
                 Waiters = new List<Waiter>()
             };
 
