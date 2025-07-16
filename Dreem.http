@@ -1,0 +1,6 @@
+@Dreem_HostAddress = http://localhost:5260
+
+GET {{Dreem_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
