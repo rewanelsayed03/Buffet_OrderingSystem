@@ -125,6 +125,7 @@ namespace Dreem.Controllers
 
                     order.OrderProductItems.Add(new OrderProductItem
                     {
+                        OrderId = order.Id,  
                         ProductItemId = product.Id,
                         Sequence = itemDto.Sequence,
                         Quantity = itemDto.Quantity
