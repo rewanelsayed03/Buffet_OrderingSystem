@@ -1,4 +1,4 @@
-﻿using Dreem.Models;
+using Dreem.Models;
 using Dreem.Models.Dtos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -63,7 +63,7 @@ namespace Dreem.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<ProductItemDto>> Post(ProductItemDto dto)
+        public async Task<ActionResult<ProductItemDto>> Post(CreateProductItemDto dto)
         {
             var item = new ProductItem
             {
@@ -76,11 +76,20 @@ namespace Dreem.Controllers
             _context.ProductItems.Add(item);
             await _context.SaveChangesAsync();
 
-            dto.Id = item.Id;
-            dto.OrderIds = new List<int>();
+            
+            var result = new ProductItemDto
+            {
+                Id = item.Id,
+                Name = item.Name,
+                Category = item.Category,
+                OutOfStock = item.OutOfStock,
+                Type = item.Type,
+                OrderIds = new List<int>() 
+            };
 
-            return CreatedAtAction(nameof(Get), new { id = dto.Id }, dto);
+            return Ok(result);
         }
+
 
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, ProductItemDto dto)
@@ -99,22 +108,6 @@ namespace Dreem.Controllers
 
             await _context.SaveChangesAsync();
             return NoContent();
-        }
-
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
-        {
-            var item = await _context.ProductItems.FindAsync(id);
-            if (item == null) return NotFound();
-
-            _context.ProductItems.Remove(item);
-            await _context.SaveChangesAsync();
-            return NoContent();
-        }
-
-        private async Task<bool> ProductItemExists(int id)
-        {
-            return await _context.ProductItems.AnyAsync(p => p.Id == id);
         }
     }
 }
