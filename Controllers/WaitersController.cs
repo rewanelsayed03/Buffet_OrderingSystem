@@ -1,4 +1,4 @@
-﻿using Dreem.Models;
+using Dreem.Models;
 using Dreem.Models.Dtos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -95,21 +95,6 @@ namespace Dreem.Controllers
             return NoContent();
         }
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
-        {
-            var waiter = await _context.Waiters.FindAsync(id);
-            if (waiter == null) return NotFound();
-
-            _context.Waiters.Remove(waiter);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        private async Task<bool> WaiterExists(int id)
-        {
-            return await _context.Waiters.AnyAsync(w => w.Id == id);
-        }
+        
     }
 }
